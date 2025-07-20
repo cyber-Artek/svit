@@ -1,10 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}Профіль{% endblock %}
 
-</body>
-</html>
+{% block content %}
+<h1>Профіль користувача {{ user_obj.username }}</h1>
+
+{% if user_obj.avatar %}
+    <img src="{{ user_obj.avatar.url }}" width="100">
+{% endif %}
+
+<p>Ім'я магазину: {{ user_obj.store_name }}</p>
+<p>Опис: {{ user_obj.bio }}</p>
+<p>Платіжна інформація: {{ user_obj.payment_info }}</p>
+
+{% if user == user_obj %}
+    <a href="{% url 'profile-edit' %}">Редагувати</a>
+{% endif %}
+{% endblock %}

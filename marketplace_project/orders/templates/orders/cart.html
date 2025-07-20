@@ -1,10 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}Кошик{% endblock %}
 
-</body>
-</html>
+{% block content %}
+<h1>Кошик</h1>
+
+{% if cart_items %}
+    <ul>
+        {% for item in cart_items %}
+            <li>
+                {{ item.product.title }} — {{ item.quantity }} шт — {{ item.subtotal }} грн
+                <form
+                    hx-post="{% url 'remove-from-cart' item.product.pk %}"
+                    hx-trigger="click"
+                    hx-target="closest li"
+                    hx-swap="outerHTML">
+                    {% csrf_token %}
+                    <button type="submit">Видалити</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+    <p><strong>Разом: {{ total }} грн</strong></p>
+    <a href="{% url 'order-create' %}">Оформити замовлення</a>
+<form action="{% url 'create-order' %}" method="post">
+    {% csrf_token %}
+    <button type="submit"> Оформити замовлення</button>
+</form>
+
+{% else %}
+    <p>Кошик порожній.</p>
+{% endif %}
+{% endblock %}

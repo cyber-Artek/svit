@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}{% if form.instance.pk %}Редагувати товар{% else %}Створити товар{% endif %}{% endblock %}
 
-</body>
-</html>
+{% block content %}
+<h1>{% if form.instance.pk %}Редагувати{% else %}Створити{% endif %} товар</h1>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">{% if form.instance.pk %}Оновити{% else %}Додати{% endif %}</button>
+</form>
+{% endblock %}

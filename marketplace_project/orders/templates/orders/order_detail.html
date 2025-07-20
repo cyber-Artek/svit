@@ -1,10 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}Замовлення №{{ order.pk }}{% endblock %}
 
-</body>
-</html>
+{% block content %}
+<h1>Замовлення №{{ order.pk }}</h1>
+<p>Статус: {{ order.status }}</p>
+<p>Дата: {{ order.created_at }}</p>
+
+<ul>
+    {% for item in order.items.all %}
+        <li>{{ item.product.title }} — {{ item.quantity }} шт</li>
+    {% endfor %}
+</ul>
+{% endblock %}

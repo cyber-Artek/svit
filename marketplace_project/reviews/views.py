@@ -33,3 +33,4 @@ class ProductReviewListView(ListView):
     def get_queryset(self):
         product_id = self.kwargs.get('product_id')
         return Review.objects.filter(product_id=product_id)
+

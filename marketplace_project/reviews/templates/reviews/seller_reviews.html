@@ -1,10 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}Відгуки про продавця {{ seller.store_name }}{% endblock %}
 
-</body>
-</html>
+{% block content %}
+<h1>Відгуки про продавця {{ seller.store_name }}</h1>
+
+{% if reviews %}
+    {% for review in reviews %}
+        <div class="review">
+            <strong>{{ review.reviewer.username }}</strong> — {{ review.rating }} ★
+            <p>{{ review.comment }}</p>
+            <small>Товар: <a href="{% url 'product-detail' review.product.pk %}">{{ review.product.title }}</a></small>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>Відгуків ще немає.</p>
+{% endif %}
+{% endblock %}

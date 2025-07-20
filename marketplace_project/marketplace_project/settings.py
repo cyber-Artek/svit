@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'orders',
     'products',
     'reviews',
+    'home',
 
 ]
 
@@ -134,3 +135,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
 TEMPLATES[0]['DIRS'] = [BASE_DIR / 'templates']
+
+LOGIN_URL = 'login'
+LOGOUT_REDIRECT_URL = 'login'
+LOGIN_REDIRECT_URL = 'product-list'

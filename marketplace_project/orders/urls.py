@@ -12,4 +12,10 @@ urlpatterns = [
     path('create/', OrderCreateView.as_view(), name='order-create'),
     path('', OrderListView.as_view(), name='order-list'),
     path('<int:pk>/', OrderDetailView.as_view(), name='order-detail'),
+
+    path('cart/', CartView.as_view(), name='cart'),
+    path('add-to-cart/<int:pk>/', AddToCartView.as_view(), name='add-to-cart'),
+    path('create/', OrderCreateView.as_view(), name='create-order'),
+
+
 ]

@@ -1,10 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}{{ product.title }}{% endblock %}
 
-</body>
-</html>
+{% block content %}
+<h1>{{ product.title }}</h1>
+<img src="{{ product.image.url }}" width="300">
+<p>Ціна: {{ product.price }} грн</p>
+<p>{{ product.description }}</p>
+<p>Рейтинг: {{ product.average_rating }} / 5</p>
+
+<form
+    hx-post="{% url 'add-to-cart' product.pk %}"
+    hx-target="this"
+    hx-swap="outerHTML">
+    {% csrf_token %}
+    <button type="submit">Додати в кошик</button>
+</form>
+
+<hr>
+<h3>Відгуки</h3>
+{% include 'reviews/review_form.html' with product=product %}
+
+<div id="reviews">
+    {% for review in product.reviews.all %}
+        <div class="review">
+            <strong>{{ review.reviewer.username }}</strong> - {{ review.rating }}★
+            <p>{{ review.comment }}</p>
+        </div>
+    {% empty %}
+        <p>Ще немає відгуків.</p>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -16,7 +16,7 @@ class UserRegisterForm(UserCreationForm):
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        # Встановлюємо прапорець is_seller залежно від вибраної ролі
+
         role = self.cleaned_data.get('role')
         if role == 'seller':
             user.is_seller = True

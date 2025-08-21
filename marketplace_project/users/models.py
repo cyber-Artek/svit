@@ -1,10 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-
-
-
-
 class CustomUser(AbstractUser):
     is_seller = models.BooleanField(default=False)
     is_buyer = models.BooleanField(default=True)
@@ -12,9 +8,6 @@ class CustomUser(AbstractUser):
     bio = models.TextField(blank=True)
     store_name = models.CharField(max_length=255, blank=True)
     payment_info = models.TextField(blank=True)
-
-
-
 
     ROLE_CHOICES = (
         ('buyer', 'Покупець'),

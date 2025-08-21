@@ -5,6 +5,7 @@ body {
     background-color: #f7f7f7;
 }
 
+
 nav {
     background-color: #222;
     padding: 10px;
@@ -15,7 +16,13 @@ nav a {
     color: white;
     margin: 0 15px;
     text-decoration: none;
+    transition: color 0.3s ease;
 }
+
+nav a:hover {
+    color: #ffd700;
+}
+
 
 .container {
     max-width: 960px;
@@ -24,11 +31,13 @@ nav a {
     background-color: white;
 }
 
+
 .product-grid {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
 }
+
 
 .product-card {
     border: 1px solid #ddd;
@@ -37,12 +46,21 @@ nav a {
     background: #fff;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     text-align: center;
+    border-radius: 6px;
+    transition: all 0.2s ease;
 }
 
 .product-card img {
     width: 100%;
     height: auto;
+    border-radius: 4px;
 }
+
+.product-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
 
 button {
     background-color: #28a745;
@@ -50,13 +68,88 @@ button {
     padding: 6px 12px;
     border: none;
     cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
     background-color: #218838;
 }
 
+
 .review {
     border-top: 1px solid #ccc;
-    padding: 10px 0;
+    padding: 10px 15px;
+    margin-top: 10px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+}
+
+
+@media (max-width: 768px) {
+    .product-grid {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .product-card {
+        width: 100%;
+    }
+}
+
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    background-color: #222;
+    padding: 10px;
+    gap: 10px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    border-radius: 4px;
+}
+
+nav a:hover,
+nav a.active {
+    color: #ffd700;
+    background-color: rgba(255, 215, 0, 0.1);
+}
+
+.logout-form {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.logout-form button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.logout-form button:hover {
+    background-color: #c82333;
+}
+
+
+@media (max-width: 600px) {
+    nav {
+        flex-direction: column;
+    }
+    nav a,
+    .logout-form {
+        width: 90%;
+        text-align: center;
+    }
+    .logout-form {
+        margin-top: 5px;
+    }
 }

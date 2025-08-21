@@ -2,10 +2,37 @@
 {% block title %}Реєстрація{% endblock %}
 
 {% block content %}
-<h1>Реєстрація</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Зареєструватись</button>
-</form>
+<div class="container mt-4">
+    <h1 class="mb-3">Реєстрація</h1>
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.email.label_tag }}
+            {{ form.email }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.password1.label_tag }}
+            {{ form.password1 }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.password2.label_tag }}
+            {{ form.password2 }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.role.label_tag }}
+            {{ form.role }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Зареєструватись</button>
+    </form>
+</div>
 {% endblock %}

@@ -1,0 +1,10 @@
+{% for review in reviews %}
+    <div class="review">
+        <strong>{{ review.reviewer.username }}</strong>
+        <span>{{ review.rating }} ★</span>
+        <p>{{ review.comment }}</p>
+        <small>{{ review.created_at|date:"d.m.Y H:i" }}</small>
+    </div>
+{% empty %}
+    <p>Відгуків ще немає.</p>
+{% endfor %}

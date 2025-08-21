@@ -8,12 +8,3 @@
     {{ form.as_p }}
     <button type="submit">Надіслати відгук</button>
 </form>
-<div id="reviews">
-    {% for review in product.reviews.all %}
-        <div class="review">
-            <strong>{{ review.reviewer.username }}</strong>
-            <span>Оцінка: {{ review.rating }} ★</span>
-            <p>{{ review.comment }}</p>
-        </div>
-    {% endfor %}
-</div>

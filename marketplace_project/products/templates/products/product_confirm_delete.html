@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Видалити товар: {{ object.title }}?</h2>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Так, видалити</button>
+    <a href="{% url 'product-list' %}">Скасувати</a>
+</form>
+{% endblock %}

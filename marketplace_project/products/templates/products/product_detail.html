@@ -1,33 +1,69 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}{{ product.title }}{% endblock %}
 
 {% block content %}
-<h1>{{ product.title }}</h1>
-<img src="{{ product.image.url }}" width="300">
-<p>Ціна: {{ product.price }} грн</p>
-<p>{{ product.description }}</p>
-<p>Рейтинг: {{ product.average_rating }} / 5</p>
+<div class="card mb-4 shadow">
+  {% if product.image %}
+    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.title }}">
+  {% else %}
+    <img src="{% static 'images/no-image.png' %}" class="card-img-top" alt="No image">
+  {% endif %}
+  <div class="card-body">
+    <h2 class="card-title">{{ product.title }}</h2>
+    <p class="card-text">{{ product.description }}</p>
+    <p class="card-text"><strong>{{ product.price }} грн</strong></p>
+    <p>Рейтинг: {{ average_rating }}</p>
 
 <form
+    method="post"
     hx-post="{% url 'add-to-cart' product.pk %}"
-    hx-target="this"
+    hx-target="#cart-button-{{ product.pk }}"
     hx-swap="outerHTML">
     {% csrf_token %}
-    <button type="submit">Додати в кошик</button>
+    <button id="cart-button-{{ product.pk }}" type="submit" class="btn btn-primary mb-2">
+        Додати в кошик
+    </button>
 </form>
+
+
+    {% if user.is_authenticated and user.is_seller and product.seller == user %}
+      <a href="{% url 'product-edit' product.pk %}" class="btn btn-warning">Редагувати</a>
+      <a href="{% url 'product-delete' product.pk %}" class="btn btn-danger">Видалити</a>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Модальне вікно кошика -->
+<div class="modal fade" id="cartModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Товар додано</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        Товар "{{ product.title }}" додано в кошик.
+      </div>
+      <div class="modal-footer">
+        <a href="{% url 'cart' %}" class="btn btn-success">Перейти в кошик</a>
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Продовжити покупки</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <hr>
 <h3>Відгуки</h3>
+
 {% include 'reviews/review_form.html' with product=product %}
 
 <div id="reviews">
     {% for review in product.reviews.all %}
-        <div class="review">
-            <strong>{{ review.reviewer.username }}</strong> - {{ review.rating }}★
-            <p>{{ review.comment }}</p>
-        </div>
+        {% include "reviews/review_item.html" with review=review %}
     {% empty %}
         <p>Ще немає відгуків.</p>
     {% endfor %}
 </div>
+
 {% endblock %}

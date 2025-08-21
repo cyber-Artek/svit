@@ -14,8 +14,12 @@ class SubCategoryAdmin(admin.ModelAdmin):
     list_filter = ('category',)
 
 
-@admin.register(Product)
+
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('title', 'price', 'seller', 'category', 'subcategory', 'available')
-    list_filter = ('available', 'category', 'subcategory')
-    search_fields = ('title', 'description')
+    list_display = ('title', 'get_seller', 'price', 'created_at')
+
+    def get_seller(self, obj):
+        return obj.seller.username
+    get_seller.short_description = 'Продавець'
+
+admin.site.register(Product, ProductAdmin)

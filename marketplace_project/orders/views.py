@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from .models import Order, OrderItem
 from .forms import OrderCreateForm
 from products.models import Product
-
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import JsonResponse
 from django.views import View
@@ -78,15 +78,18 @@ class CartView(View):
         return render(request, self.template_name, context)
 
 
+
+
 class AddToCartView(View):
     def post(self, request, pk):
         cart = request.session.get('cart', {})
         cart[str(pk)] = cart.get(str(pk), 0) + 1
         request.session['cart'] = cart
 
+
         if request.headers.get('HX-Request'):
-            return JsonResponse({'message': 'Товар додано до кошика'})
-        return redirect('product-list')
+            return HttpResponse('<button disabled>Додано </button>')
+        return redirect('cart')
 
 
 class RemoveFromCartView(View):

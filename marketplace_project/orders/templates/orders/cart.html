@@ -21,11 +21,14 @@
         {% endfor %}
     </ul>
     <p><strong>Разом: {{ total }} грн</strong></p>
-    <a href="{% url 'order-create' %}">Оформити замовлення</a>
-<form action="{% url 'create-order' %}" method="post">
+<a href="{% url 'order-create' %}">Оформити замовлення</a>
+
+
+<form action="{% url 'order-create' %}" method="post">
     {% csrf_token %}
-    <button type="submit"> Оформити замовлення</button>
+    <button type="submit">Оформити замовлення</button>
 </form>
+
 
 {% else %}
     <p>Кошик порожній.</p>

@@ -11,39 +11,43 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}">Головна</a>
+          <a class="nav-link {% if request.path == '/' or request.path == '/en/' %}active{% endif %}" href="{% url 'home' %}">Головна</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {% if request.path|startswith:'/products' %}active{% endif %}" href="{% url 'product-list' %}">Товари</a>
+          <a class="nav-link {% if '/products' in request.path %}active{% endif %}" href="{% url 'product-list' %}">Товари</a>
         </li>
 
         {% if user.is_authenticated %}
           {% if user.role == "is_seller" %}
           <li class="nav-item">
-            <a class="nav-link {% if request.path == '/products/product/add/' %}active{% endif %}" href="{% url 'product-add' %}">Створити товар</a>
+            <a class="nav-link {% if '/products/product/add/' in request.path %}active{% endif %}" href="{% url 'product-add' %}">Створити товар</a>
           </li>
           {% endif %}
           <li class="nav-item">
-            <a class="nav-link {% if request.path == '/orders/cart/' %}active{% endif %}" href="{% url 'cart' %}">Кошик</a>
+            <a class="nav-link {% if '/orders/cart/' in request.path %}active{% endif %}" href="{% url 'cart' %}">Кошик</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if request.path == '/orders/' %}active{% endif %}" href="{% url 'order-list' %}">Замовлення</a>
+            <a class="nav-link {% if '/orders/' in request.path and not '/cart/' in request.path %}active{% endif %}" href="{% url 'order-list' %}">Замовлення</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if request.path == '/users/profile/'|add:user.pk|stringformat:"s" %}active{% endif %}" href="{% url 'profile' user.pk %}">Профіль</a>
+            <a class="nav-link {% if '/users/profile/'|add:user.pk|stringformat:"s" in request.path %}active{% endif %}" href="{% url 'profile' user.pk %}">Профіль</a>
           </li>
         {% endif %}
       </ul>
 
       {% if user.is_authenticated %}
-      <form action="{% url 'logout' %}" method="post" class="d-flex">
+      <form action="{% url 'logout' %}" method="post" class="d-flex logout-form">
           {% csrf_token %}
-          <button class="btn btn-outline-danger" type="submit">Вийти</button>
+          <button class="btn logout-btn" type="submit">Вийти</button>
       </form>
       {% else %}
       <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link {% if request.path == '/users/login/' %}active{% endif %}" href="{% url 'login' %}">Увійти</a></li>
-        <li class="nav-item"><a class="nav-link {% if request.path == '/users/register/' %}active{% endif %}" href="{% url 'register' %}">Реєстрація</a></li>
+        <li class="nav-item">
+          <a class="nav-link {% if '/users/login/' in request.path %}active{% endif %}" href="{% url 'login' %}">Увійти</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if '/users/register/' in request.path %}active{% endif %}" href="{% url 'register' %}">Реєстрація</a>
+        </li>
       </ul>
       {% endif %}
     </div>

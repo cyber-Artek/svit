@@ -1,15 +1,14 @@
 {% extends 'base.html' %}
 {% block title %}Мої замовлення{% endblock %}
-
 {% block content %}
-<h1>Ваші замовлення</h1>
-<ul>
-    {% for order in orders %}
-        <li>
-            <a href="{% url 'order-detail' order.pk %}">
-                Замовлення №{{ order.pk }} — {{ order.status }} — {{ order.created_at|date:"d.m.Y" }}
-            </a>
-        </li>
-    {% endfor %}
+<h1 class="mb-3">Ваші замовлення</h1>
+<ul class="list-group">
+  {% for order in orders %}
+    <li class="list-group-item">
+      <a href="{% url 'order-detail' order.pk %}">
+        Замовлення №{{ order.pk }} — {{ order.status }} — {{ order.created_at|date:"d.m.Y" }}
+      </a>
+    </li>
+  {% endfor %}
 </ul>
 {% endblock %}
